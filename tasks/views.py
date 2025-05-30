@@ -53,7 +53,6 @@ def task_create(request):
             task.user = request.user
             task.save()
             return redirect('task_list')
-        
     else:
         form = TaskForm()
     return render (request, 'tasks/task_form.html', {'form': form})
@@ -68,8 +67,7 @@ def task_edit(request, pk):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-            return redirect('task_list')
-        
+            return redirect('task_list')        
     else:
         form = TaskForm(instance=task)
     return render (request, 'tasks/task_form.html', {'form': form, 'title':'Editar tarea'})
