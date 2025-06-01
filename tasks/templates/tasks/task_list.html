@@ -1,5 +1,12 @@
 {% extends "tasks/base.html" %}
 {% block content %}
     <h2>Mis Tareas</h2>
-    <a href="{% url 'task_create' %}"></a>
+    <a class="btn" href="{% url 'task_create' %}">+ Nueva tarea</a>
+    <ul class="task-list">
+        {% for task in tasks %}
+        <li class="task-item {% if task.completed %}completed{% endif %}">
+            <strong>{{ task.title }}</strong> - {{ task.description }}
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

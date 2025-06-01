@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.task_list, name='task_list'),
     path('register/', views.register_view, name='register'),
-    path('login/', LoginView.as_view(template_name='tasks/login.html')),
+    path('login/', LoginView.as_view(template_name='tasks/login.html'), name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('tasks/create/', views.task_create, name='task_create'),
     path('tasks/<int:pk>/edit/', views.task_edit, name='task_edit'),
