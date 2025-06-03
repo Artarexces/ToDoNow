@@ -1,9 +1,25 @@
 {% extends "tasks/base.html" %}
+{% load static %}
+{% block title %}Iniciar sesión | To-Do Now{% endblock %}
 {% block content %}
+<div class="auth-box">
     <h2>Iniciar sesión</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Entrar</button>
+    <form method="post" class="form-container">
+        <label for="username">Usuario</label>
+        <input type="text" name="username" required class="input-field">
+
+        <label for="password">Contraseña</label>
+        <input type="password" name="password" required class="input-field">
+
+        <button type="submit" class="btn btn-primary">Entrar</button>
     </form>
+    <p>
+    ¿No tenés cuenta? <a href="{% url 'register' %}" class="register-link">Registrate aquí</a>.
+    </p>
+    <p>¿Olvidaste tu contraseña? <a href="#">Recuperar</a></p>
+
+    <p>O inicia sesión con:
+        <img src="{% static 'images/google-icon.png' %}" alt="Google" class="icon-btn">
+    </p>
+</div>
 {% endblock %}

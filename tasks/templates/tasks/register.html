@@ -1,9 +1,19 @@
 {% extends 'tasks/base.html' %}
+{% load static %}
+{% block title %}Registrarse | To-Do Now{% endblock %}
 {% block content %}
-    <h2>Registrarse</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-      <button type="submit">Crear cuenta</button>
-    </form>
+<div class="auth-box">
+  <h2>Crear cuenta</h2>
+  <form method="post" class="form-container">
+      {% csrf_token %}
+      {{ form.as_p }}
+    <button type="submit" class="submit-btn">Registrarse</button>
+  </form>
+  <p>
+  ¿No tenés cuenta? <a href="{% url 'register' %}" class="register-link">Registrate aquí</a>.
+  </p>
+  <p>O regístrate con:
+    <img src="{% static 'images/google-icon.png' %}" alt="Google" class="icon-btn">
+  </p>
+</div>
 {% endblock %}

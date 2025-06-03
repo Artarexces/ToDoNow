@@ -1,12 +1,41 @@
 {% extends "tasks/base.html" %}
+{% load static %}
 {% block content %}
-    <h2>Mis Tareas</h2>
-    <a class="btn" href="{% url 'task_create' %}">+ Nueva tarea</a>
-    <ul class="task-list">
-        {% for task in tasks %}
-        <li class="task-item {% if task.completed %}completed{% endif %}">
-            <strong>{{ task.title }}</strong> - {{ task.description }}
-        </li>
-        {% endfor %}
-    </ul>
+    <h1>Hola{{ request.user.first_name }} 👋</h1>
+    <p class="subtitle">Manténe tus tareas organizadas</p>
+    
+    
+    <div class="tabs">
+      <a href="{% url 'task_list' %}?section=all" class="{% if section == 'all' %}active{% endif %}">Todas</a>
+      <a href="{% url 'task_list' %}" class="{% if section == 'pendientes' %}active{% endif %}">Pendientes</a>
+      <a href="{% url 'task_list' %}" class="{% if section == 'completadas' %}active{% endif %}">Completadas</a>
+    </div>
+
+    <div class="task-list">
+      {% for task in tasks %}
+        <div class="task-card {% if task.completed %}completed{% endif %}">
+          <a href="{% url 'toggle_task' task.id %}">
+            {% if task.completed %}✓{% endif %}
+          </a>
+        </div>
+
+        <div class="task-info">
+          <h3>{{ task.title }}</h3>
+          <p>{{ task.description }}</p>
+          <small>{{ task.due_date | date:"d M Y H:i "}}</small>
+        </div>
+
+        <div class="actions">
+          <a href="{% url 'edit_task' task.id %}" class="icon">✎</a>
+          <form action="{% url 'delete_task' task.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="icon">🗑</button>
+          </form>
+        </div>
+        {% empty %}
+        <p class="no-tasks">No hay tareas en esta sección.</p>
+      {% endfor %}
+    </div>
+
+    <a href="{% url 'add_task' %}" class="floating-btn">+</a>
 {% endblock %}

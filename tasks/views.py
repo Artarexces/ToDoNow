@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout , authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CustomUserCreationForm, TaskForm
 from .models import Task
 
@@ -22,47 +23,67 @@ def register_view(request):
     return render(request, 'tasks/register.html', {'form': form})
 
 
-
 ## Inicio y cierre de session (login-logout)
 
-class UserLoginView(LoginView):
-    template_name = 'tasks/login.html'
-    redirect_authenticated_user = True
+# class UserLoginView(SuccessMessageMixin, LoginView):
+#     template_name = 'tasks/login.html'
+#     success_message = '¡Inicio de sesión exitoso!'
+#     redirect_authenticated_user = True
+    
+def login_view(request): 
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect('task_list')
+        else:
+            messages.error(request, "Usuario o contraseña incorrecto.")
+    return render(request, 'tasks/login.html')
+    
     
 def logout_view(request):
     logout(request)
+    messages.success(request, 'Cerraste sesión correctamente.')
     return redirect('login')
 
-
-## Tareas 
+ 
+## Lista de tareas
 
 @login_required(login_url='login')
 def task_list(request):
-    tasks = Task.objects.filter(user=request.user).order_by('-created_at')
-    return render (request, 'tasks/task_list.html', {'tasks': tasks})
+    section = request.GET.get('section', 'all')
+    if section == 'pendientes':
+        tasks = Task.objects.filter(user=request.user, completed=False).order_by('due_date')
+    elif section == 'completadas':
+        tasks = Task.objects.filter(user=request.user, completed=True).order_by('due_date')
+    else:
+        tasks = Task.objects.filter(user=request.user).order_by('due_date')
+    return render (request, 'tasks/task_list.html', {'tasks': tasks, 'section': section})
 
 
-## Creacion de tarea
+## Crear tarea
 
 @login_required(login_url='login')
-def task_create(request):
+def add_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            task = form.save(commit=False)
-            task.user = request.user
-            task.save()
+            new_task = form.save(commit=False)
+            new_task.user = request.user
+            new_task.save()
             return redirect('task_list')
     else:
         form = TaskForm()
-    return render (request, 'tasks/task_form.html', {'form': form})
+    return render (request, 'tasks/add_task.html', {'form': form})
 
 
 ## Editar tarea 
 
 @login_required(login_url='login')
-def task_edit(request, pk):
-    task = get_object_or_404(Task, pk=pk, user=request.user)
+def edit_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
@@ -70,15 +91,15 @@ def task_edit(request, pk):
             return redirect('task_list')        
     else:
         form = TaskForm(instance=task)
-    return render (request, 'tasks/task_form.html', {'form': form, 'title':'Editar tarea'})
+    return render (request, 'tasks/edit_task.html', {'form': form, 'title':'Editar tarea'})
 
 
 ## Completar tarea
 
 @login_required(login_url='login')
-def task_complete(request, pk):
-    task = get_object_or_404(Task, pk=pk, user=request.user)
-    task.completed = True
+def toggle_complete(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+    task.completed = not task.completed
     task.save()
     return redirect('task_list')
 
@@ -86,7 +107,9 @@ def task_complete(request, pk):
 ## Eliminar tarea
 
 @login_required(login_url='login')
-def task_delete(request, pk):
-    task = get_object_or_404(Task, pk=pk, user=request.user)
-    task.delete()
-    return redirect('task_list')
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('task_list')
+    return render(request, 'tasks/delete_task.html', {'task': task})

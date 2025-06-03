@@ -5,21 +5,33 @@
     <meta charset="UTF-8">
     <title>To-Do Now</title>
     {% load static %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
 </head>
 <body>
     <header>
-        <h1>To-Do Now</h1>
-        <nav>
-            {% if user.is_authenticate%}
-            Hola, {{user.username}} | 
-            <a href="{% url 'logout' %}">Cerrar sesión</a>
-            {% else %}
-            <a href="{% url 'login' %}">Iniciar sesión</a>
-            <a href="{% url 'register' %}">Registrarse</a>
-            {% endif %}
-        </nav>
+        <h1><a href="{% url 'task_list' %}" class="logo-link">To-Do Now</a></h1>
+        <nav> 
+    <nav class="header-links">
+      {% if user.is_authenticated %}
+        <span class="welcome-text">Hola, {{ user.username }}!</span>
+        <a href="{% url 'logout' %}" class="logout-link">Cerrar sesión</a>
+      {% else %}
+        <a href="{% url 'login' %}" class="login-link">Iniciar sesión</a>
+        <a href="{% url 'register' %}" class="register-link">Registrarse</a>
+      {% endif %}
+    </nav>
     </header>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     <hr>
     <div class="content">
      {% block content %} {% endblock %}
