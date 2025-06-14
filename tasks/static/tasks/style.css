@@ -1,89 +1,60 @@
-/* Colores generales */
 :root {
-    --color-primary: #FFB300;
-    --color-bg: #f5f5f5;
-    --color-grey: #AAAAAA;
-    --color-card-bg: #FFFFFF;
-    --color-card-completed: #EEEEEE;
-    --font-family: 'Noto Sans';
+  --color-primario: #FFA800;    /* Naranja brillante */
+  --color-fondo: #F9F5EE;       /* Fondo crema suave */
+  --color-blanco: #FFFFFF;      /* Blanco puro */
+  --color-texto: #333333;       /* Texto principal */
+  --color-texto-sec: #777777;   /* Texto secundario */
+  --color-gris-claro: #E0E0E0;  
+  --color-gris-medio: #CCCCCC;  
+  --color-rojo: #FF4C4C;        
+  --radio: 8px;                 
+  --sombra: rgba(0, 0, 0, 0.05); 
+  --padding: 20px;
+  --fuente-base: 'Noto Sans', sans-serif;
 }
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    background-color: var(--color-bg);
-    font-family: var(--font-family);
-    color: #282828;
+body {
+    font-family: var(--fuente-base);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.4;
 }
 
-/* Campos de texto - inputs */
+/* Header / Navbar */
 
-.input-field {
-    width: 100%;
-    padding: 0.6rem;
-    margin-top: 0.3rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+header h1 {
+    font-size: 1.4rem;
 }
 
-.textarea-field {
-    width: 100%;
-    padding: 0.6rem;
-    margin-top: 0.3rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    resize: none;
-}
-
-/* Botones */
-
-.btn {
-    display: inline-block;
-    padding: 0.7rem 1.2rem;
-    border: none;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
+.logo-link {
     text-decoration: none;
-    text-align: center;
-    margin-top: 1rem;
+    color: var(--color-primario);
 }
 
-.btn-primary {
-    background-color: var(--color-primary);
-    color: #FFFFFF;
+.header-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
-.btn-secondary {
-    background-color: #FFFFFF;
-    color: var(--color-primary);
-    border: 2px solid var(--color-primary);
+.header-links .welcome-text {
+    font-size: 0.95rem;
+    color: var(--color-texto-sec);
 }
 
-.btn-danger {
-    background-color: #e40f0f;
-    color: #FFFFFF;
+.header-links a { 
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: var(color --color-primario);
+    transition: color 0.2s ease;
 }
 
-.icon-btn {
-    width: 24px;
-    vertical-align: middle;
-    margin-left: 0.5rem;
-}
-
-/* Estilos de cajas login / Registro */
-
-.auth-box {
-    background-color: #FFFFFF;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.header-links a:hover {
+    color: darken(var(--color-primario), 10%);
 }
