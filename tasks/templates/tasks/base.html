@@ -16,7 +16,7 @@
         <nav> 
     <nav class="header-links">
       {% if user.is_authenticated %}
-        <span class="welcome-text">Hola, {{ user.username }}!</span>
+        <span class="welcome-text">Hola, {{ user.username }} !</span>
         <a href="{% url 'logout' %}" class="logout-link">Cerrar sesión</a>
       {% else %}
         <a href="{% url 'login' %}" class="login-link">Iniciar sesión</a>
