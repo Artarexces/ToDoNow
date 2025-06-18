@@ -5,6 +5,7 @@
 <div class="auth-box">
     <h2>Iniciar sesión</h2>
     <form method="post" class="form-container">
+        {% csrf_token %}
         <label for="username">Usuario</label>
         <input type="text" name="username" required class="input-field">
 

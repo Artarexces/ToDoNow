@@ -28,6 +28,19 @@ body {
 
 /* Header / Navbar */
 
+header {
+    width: 100%;
+    background-color: var(--color-blanco);
+    box-shadow: 0 2px 8px var(--sombra);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
 header h1 {
     font-size: 1.4rem;
 }
@@ -57,4 +70,91 @@ header h1 {
 
 .header-links a:hover {
     color: darken(var(--color-primario), 10%);
+}
+
+/* Login & Register */
+
+.auth-box {
+    background-color: var(--color-blanco);
+    border-radius: var(--radio);
+    box-shadow: 0 4px 12px var(--sombra);
+    padding: 30px 24px;
+    margin: 60px auto 20px auto;
+    width: 100%;
+    max-width: 400px; 
+}
+
+.auth-box h2 {
+    text-align: center;
+    font-size: 1.6rem; 
+    color: var(--color-texto);
+    margin-bottom: 20px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container label {
+    font-size: 0.9rem;
+    color: var(--color-texto-sec);
+    margin-bottom: 6px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid var(--color-gris-medio);
+    border-radius: var(--radio);
+    background-color: var(--color-blanco);
+    color: var(--color-texto);
+    margin-bottom: 18px;
+}
+
+.input-field::placeholder {
+    color: var(--color-texto-sec);
+}
+
+/* Botones generales (forms de tasks) */
+
+.btn {
+    display: inline-block;
+    padding: 10px 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--radio);
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+}
+
+.btn-primary:hover {
+    filter: brightness(0.9);
+}
+
+.btn-secondary {
+    background-color: var(--color-blanco);
+    color: var(--color-texto);
+    border: 1px solid var(--color-gris-medio);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-gris-claro);
+}
+
+.btn-danger {
+    background-color: var(--color-rojo);
+    color: var(--color-blanco);
+}
+
+.btn-danger:hover {
+    filter: brightness(0.9);
 }
