@@ -1,16 +1,38 @@
-{% extends 'tasks/base.html' %}
+{% extends "tasks/base.html" %}
 {% load static %}
-{% block title %}Registrarse | To-Do Now{% endblock %}
+
 {% block content %}
 <div class="auth-box">
   <h2>Crear cuenta</h2>
   <form method="post" class="form-container">
-      {% csrf_token %}
-      {{ form.as_p }}
-    <button type="submit" class="submit-btn">Registrarse</button>
+    {% csrf_token %}
+    <div class="field-group">
+      {{ form.username.label_tag }}  
+      {{ form.username }}
+      {{ form.username.errors }}
+    </div>
+    <div class="field-group">
+      {{ form.first_name.label_tag }}
+      {{ form.first_name }}
+      {{ form.first_name.errors }}
+    </div>
+    <div class="field-group">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+      {{ form.email.errors }}
+    </div>
+    <div class="field-group">
+      {{ form.password1.label_tag }}
+      {{ form.password1 }}
+      {{ form.password1.errors }}
+    </div>
+    <div class="field-group">
+      {{ form.password2.label_tag }}
+      {{ form.password2 }}
+      {{ form.password2.errors }}
+    </div>
+    <button type="submit" class="btn btn-primary">Registrarse</button>
   </form>
-  <p>
-  ¿No tenés cuenta? <a href="{% url 'register' %}" class="register-link">Registrate aquí</a>
-  </p>
+  <p class="small-text">¿Ya tenés cuenta? <a href="{% url 'login' %}">Entrar aquí</a></p>
 </div>
 {% endblock %}

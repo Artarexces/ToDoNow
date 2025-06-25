@@ -9,6 +9,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+    <style>
+    .app-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url("{% static 'tasks/img/background-cieles.jpg' %}") center/cover;
+    opacity: 0.20;
+    z-index: -1;
+    }
+    </style>
 </head>
 <body>
     <header>
@@ -16,7 +28,7 @@
         <nav> 
     <nav class="header-links">
       {% if user.is_authenticated %}
-        <span class="welcome-text">Hola, {{ user.username }} !</span>
+        <span class="welcome-text">Hola, {{ user.username }}!</span>
         <a href="{% url 'logout' %}" class="logout-link">Cerrar sesión</a>
       {% else %}
         <a href="{% url 'login' %}" class="login-link">Iniciar sesión</a>
@@ -36,5 +48,6 @@
     <div class="content">
      {% block content %} {% endblock %}
     </div>
+    <div class="app-background"></div>
 </body>
 </html>

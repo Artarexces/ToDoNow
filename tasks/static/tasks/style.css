@@ -1,5 +1,5 @@
 :root {
-  --color-primario: #FFA800;    /* Naranja brillante */
+  --color-primario: #d63681;    /* Naranja brillante */
   --color-fondo: #F9F5EE;       /* Fondo crema suave */
   --color-blanco: #FFFFFF;      /* Blanco puro */
   --color-texto: #333333;       /* Texto principal */
@@ -27,12 +27,28 @@ body {
     line-height: 1.4;
 }
 
+/* BACKGROUND */
+
+.app-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.08;
+    z-index: -1;
+}
+
+
 /* Header / Navbar */
 
 header {
     width: 100%;
     background-color: var(--color-blanco);
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(8px);
     box-shadow: 0 2px 8px var(--sombra);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -47,9 +63,29 @@ header h1 {
 }
 
 .logo-link {
+    font-size: 1.6rem;
+    font-weight: 600;
     text-decoration: none;
+    padding-bottom: 4px;
+    position: relative;
     color: var(--color-primario);
 }
+
+.logo-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background: var(--color-primario);
+    transition: width 0.3s ease;
+}
+
+.logo-link:hover::after{
+    width: 100%;
+}
+
 
 .header-links {
     display: flex;
@@ -67,10 +103,23 @@ header h1 {
     font-size: 0.95rem;
     color: var(--color-primario);
     transition: color 0.2s ease;
+    padding: 6px 0;
+    position: relative;
 }
 
 .header-links a:hover {
     color: darken(var(--color-primario), 10%);
+}
+
+.header-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: var(--color-primario);
+    transition: width 0.3s ease;
 }
 
 /* Contenido principal */
@@ -127,6 +176,38 @@ header h1 {
     color: var(--color-texto-sec);
 }
 
+
+.field-group {
+  display: flex; flex-direction: column; margin-bottom: 16px;
+}
+
+.field-group label {
+  font-weight: 500; margin-bottom: 6px; color: var(--color-texto);
+}
+
+.field-group input {
+  padding: 10px 12px;
+  border: 1px solid var(--color-gris-medio);
+  border-radius: var(--radio);
+  font-size: 1rem;
+  background: var(--color-blanco);
+  transition: border-color 0.2s;
+}
+
+.field-group input:focus {
+  outline: none;
+  border-color: var(--color-primario);
+}
+
+.field-group .errorlist {
+  color: var(--color-rojo);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.register-p {
+    margin-top: 20px;
+}
 /* Botones generales (forms de tasks) */
 
 .btn {
@@ -142,8 +223,30 @@ header h1 {
 }
 
 .btn-primary {
+    position: relative;
+    overflow: hidden;
     background-color: var(--color-primario);
     color: var(--color-blanco);
+}
+
+.btn-primary:after {
+  content: '';
+  position: absolute;
+  width: 120%; height: 120%;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.3s;
+  pointer-events: none;
+  top: 50%; left: 50%;
+  transform-origin: center;
+}
+
+.btn-primary:active:after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition: 0s;
 }
 
 .btn-primary:hover {
@@ -238,10 +341,10 @@ h1 {
     background-color: var(--color-blanco);
     border-radius: var(--radio);
     box-shadow: 0 2px 10px var(--sombra);
-    padding: 16px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 5px;
 }
 
 
@@ -257,6 +360,22 @@ h1 {
     color: transparent;
     transition: background-color 0.2s ease, border-color 0.2s ease;
     cursor: pointer;
+}
+
+.task-card {
+  background: var(--color-blanco);
+  border-radius: var(--radio);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05), 
+              inset 0 1px 3px rgba(0,0,0,0.03); 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1),
+              inset 0 1px 3px rgba(0,0,0,0.02);
 }
 
 .task-card.completed > a{
@@ -297,6 +416,15 @@ h1 {
   margin-top: 12px;
 }
 
+.actions .icon {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.actions .icon:hover {
+  transform: rotate(-10deg) scale(1.2);
+  color: var(--color-primario);
+}
+
 .actions .icon,
 .actions button.icon {
   font-size: 1.7rem;
@@ -310,7 +438,7 @@ h1 {
 
 .actions .icon:hover,
 .actions button.icon:hover {
-  color: var(--color-rojo);
+  color: var(--color-primario);
 }
 
 /* No tasks */
@@ -321,7 +449,7 @@ h1 {
     padding: 20px 0;
 }
 
-/* Boton Agregar tareas */
+/*  Boton Agregar tareas  */
 
 .floating-btn {
     display: flex;
