@@ -2,20 +2,14 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secure!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'cambia-esta-clave-por-tu-secret-key-real')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
-
-# Replace 'your-username' with your PythonAnywhere username
 PY_AWAY_HOST = f"{os.environ.get('PA_USERNAME', 'your-username')}.pythonanywhere.com"
 ALLOWED_HOSTS = [PY_AWAY_HOST, 'localhost', '127.0.0.1']
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -30,7 +24,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',           
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -43,7 +37,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'todonow.urls'
 WSGI_APPLICATION = 'todonow.wsgi.application'
 
-# Templates configuration
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -60,17 +53,24 @@ TEMPLATES = [
     },
 ]
 
-# Database configuration using dj-database-url
 DATABASE_URL = os.environ.get('DATABASE_URL') or f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
-DATABASES = {
-    'default': dj_database_url.parse(
-        DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=not DEBUG
-    )
-}
+if DATABASE_URL.startswith("sqlite"):
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=False
+        )
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=not DEBUG
+        )
+    }
 
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -83,7 +83,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
 STATIC_URL = '/static/'
 if not DEBUG:
     STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -91,7 +90,6 @@ if not DEBUG:
 else:
     STATICFILES_DIRS = [BASE_DIR / 'static']
 
-# Additional settings
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'task_list'
