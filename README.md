@@ -11,6 +11,9 @@
 > - **Tipado estático**: django‑stubs · mypy_extensions  
 
 ---
+## Deploy listo para usarse 🚀: 
+
+**https://artarexces.pythonanywhere.com**
 
 ## 🚀 Características (2025)
 
