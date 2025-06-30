@@ -75,6 +75,8 @@ python manage.py runserver
 Accede en tu navegador a http://localhost:8000/.
 ```
 
+--- 
+
 ## ⚙️ Despliegue en producción
 1. **Configura DEBUG=False y DATABASE_URL apuntando a tu base PostgreSQL.**
 
@@ -92,6 +94,7 @@ gunicorn todonow.wsgi:application --bind 0.0.0.0:$PORT
 
 5. **Configura tu host (Heroku, PythonAnywhere, AWS, etc.) usando las variables de entorno.** 
 
+---
 
 ## 📂 Estructura del proyecto
 
@@ -113,6 +116,7 @@ ToDoNow/
 │   └── wsgi.py
 └── static/      # CSS, imágenes, JS
 ```
+---
 
 ## 🤝 Contribuciones
 ¡Todas las contribuciones son bienvenidas! Para nuevas funcionalidades o correcciones:
@@ -128,6 +132,7 @@ git checkout -b feature/nombre-descriptivo
 
 4. **Sube tu rama y abre un Pull Request.**
 
+---
 
 ## 📬 Contacto
 Autor: Martin Rodriguez (@Artarexces)
