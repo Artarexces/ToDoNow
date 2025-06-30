@@ -1,4 +1,4 @@
-# ToDoNow
+# ToDoNow 📝
 
 **ToDoNow** es una aplicación web de lista de tareas (*to‑do list*) desarrollada en Django (versión 5.2.2) que permite a los usuarios registrarse, iniciar sesión y gestionar sus tareas personales con fechas de vencimiento, prioridad y estado de completado.  
 
